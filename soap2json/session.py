@@ -58,3 +58,8 @@ class Session:
         transport = Transport(session=session)
         client = Client(self.url,transport=transport)    
         self.service = client.service
+
+    def call(self,service_name,params=None):
+        service = f"{service_name}"
+        if hasattr(self.service, service) and callable(func := getattr(self.service, service)):
+            func(params)
