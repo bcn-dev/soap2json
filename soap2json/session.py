@@ -17,11 +17,17 @@ class Session:
     certfile=property(operator.attrgetter('_certfile'))
     passphrase=property(operator.attrgetter('_passphrase'))
 
-    def __init__(self,host,keyfile,certfile,passphrase=None):
+    def __init__(self,url,host,keyfile,certfile,passphrase=None):
+        self.url = url
         self.host = host
         self.keyfile = keyfile
         self.certfile = certfile
         self.passphrase = passphrase
+
+    @url.setter
+    def url(self, u):
+        if not u: raise Exception("url cannot be empty")
+        self._url = u
 
     @host.setter
     def host(self, h):
@@ -47,7 +53,7 @@ class Session:
     def connect(self):
         session = S()
         session.verify = False
-        session.mount("https://{host}".format(host=self.host),SSLAdapter(certfile=self.certfile,keyfile=self.certfile,password=self.passphrase))
+        session.mount("https://{host}".format(host=self.host),SSLAdapter(certfile=self.certfile,keyfile=self.keyfile,password=self.passphrase))
 
         transport = Transport(session=session)
         client = Client(self.url,transport=transport)    
