@@ -59,7 +59,12 @@ class Session:
         client = Client(self.url,transport=transport)    
         self.service = client.service
 
-    def call(self,service_name,params=None):
-        service = f"{service_name}"
-        if hasattr(self.service, service) and callable(func := getattr(self.service, service)):
-            func(params)
+    def call(self, name: str, *args, **kwargs):
+        if  hasattr(self, 'service'):
+            do = f"{name}"
+            if hasattr(self.service, do) and callable(func := getattr(self.service, do)):
+                return func(*args, **kwargs)
+            else:
+                Exception(f"this service does not exist")
+
+        raise Exception("Need to connect to the service first")
