@@ -1,5 +1,5 @@
 
-import operator
+import operator, xmltodict, json
 from os import path
 
 from requests import Session as S
@@ -57,13 +57,20 @@ class Session:
 
         transport = Transport(session=session)
         client = Client(self.url,transport=transport)    
-        self.service = client.service
+        self.__service = client.service
 
     def call(self, name: str, *args, **kwargs):
-        if  hasattr(self, 'service'):
+        if  hasattr(self, '__service'):
             do = f"{name}"
-            if hasattr(self.service, do) and callable(func := getattr(self.service, do)):
-                return func(*args, **kwargs)
+            if hasattr(self.__service, do) and callable(func := getattr(self.__service, do)):
+                result = func(*args, **kwargs)
+
+                try:
+                    obj = xmltodict.parse()
+                    return json.dumps(obj)
+                except:
+                    return result
+
             else:
                 Exception(f"this service does not exist")
 
