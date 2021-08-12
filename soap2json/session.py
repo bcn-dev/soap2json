@@ -58,20 +58,18 @@ class Session:
         transport = Transport(session=session)
         client = Client(self.url,transport=transport)    
         self.__service = client.service
+        return True
 
     def call(self, name: str, *args, **kwargs):
-        if  hasattr(self, '__service'):
-            do = f"{name}"
-            if hasattr(self.__service, do) and callable(func := getattr(self.__service, do)):
-                result = func(*args, **kwargs)
+        do = f"{name}"
+        if hasattr(self.__service, do) and callable(func := getattr(self.__service, do)):
+            result = func(*args, **kwargs)
 
-                try:
-                    obj = xmltodict.parse()
-                    return json.dumps(obj)
-                except:
-                    return result
+            try:
+                obj = xmltodict.parse(result)
+                return json.dumps(obj)
+            except:
+                return result
 
-            else:
-                Exception(f"this service does not exist")
-
-        raise Exception("Need to connect to the service first")
+        else:
+            raise Exception(f"this service does not exist")
