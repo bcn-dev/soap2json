@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import operator, xmltodict, json
 from os import path
@@ -67,7 +69,7 @@ class Session:
 
             try:
                 obj = xmltodict.parse(result)
-                return json.dumps(obj)
+                return json.loads(json.dumps(obj))
             except:
                 return result
 

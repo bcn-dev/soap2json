@@ -12,10 +12,15 @@ setuptools.setup(
       author_email='wilson.silva@bcn.cv',
       license='MIT',
       zip_safe=False,
-      long_description=open("README.md").read(),
+      long_description=long_description,
       long_description_content_type="text/markdown",
       url="https://github.com/bcn-dev/soap2json.git",
-      packages=setuptools.find_packages(),
+      package_dir={"": "src"},
+      packages=setuptools.find_packages(where="src"),
+      python_requires=">=3.9",
+      project_urls={
+            "Bug Tracker": "https://github.com/bcn-dev/soap2json/issues",
+      },
       classifiers=[
             "Programming Language :: Python :: 3",
             "License :: OSI Approved :: MIT License",
