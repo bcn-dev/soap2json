@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
       name='soap2json',
-      version='0.1.0',
+      version='0.1.1',
       description='Soap to Json',
       author='Wilson Silva',
       author_email='wilson.silva@bcn.cv',
@@ -17,7 +17,7 @@ setuptools.setup(
       url="https://github.com/bcn-dev/soap2json.git",
       package_dir={"": "src"},
       packages=setuptools.find_packages(where="src"),
-      python_requires=">=3.9",
+      python_requires=">=3.8",
       project_urls={
             "Bug Tracker": "https://github.com/bcn-dev/soap2json/issues",
       },
